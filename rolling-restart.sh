@@ -128,17 +128,19 @@ for NODE_CFG in ${NODES[@]}; do
     STATUS=`curl -sS -XGET http://${NODE}/`
     while [[ "$STATUS" =~ (\"status\" : 200) ]];
     do
+	echo $STATUS
         STATUS=`curl -sS -XGET http://${NODE}/`
 
         sleep 1
     done
 
-    echo ">>>>>> Waiting for cluster to reach yellow status"
+    echo ">>>>>> Waiting for cluster to reach yellow status $MASTER"
     # wait for cluster status yellow
     STATUS=""
     while [ -z "$STATUS" ];
     do
-        STATUS=`curl -sS -G $MASTER/_cat/health -d h=status | grep yellow`
+        STATUS=`curl -sS -G $MASTER/_cat/health -d h=status | grep "yellow\|green"`
+	echo $STATUS
         sleep 1
     done
 
@@ -166,7 +168,8 @@ for NODE_CFG in ${NODES[@]}; do
     STATUS=""
     while [ -z "$STATUS" ];
     do
-        STATUS=`curl -sS -G http://${NODE}/_cat/health -d h=status | grep yellow`
+        STATUS=`curl -sS -G http://${NODE}/_cat/health -d h=status | grep "yellow\|green"`
+	echo $STATUS
         sleep 1
     done
 
