@@ -5,7 +5,7 @@
 #   -n - NODE_FILE - A file containing the list of node hostnames one per line.
 #   -s SCRIPT - Script to run on each node to process the update. Script will have access to $MASTER and $NODE
 #   -d SHUTDOWN_SCRIPT - Script to run to stop elasticsearch node.
-
+#  testing webhook push
 while getopts ":d:m:n:s:h" opt; do
     case $opt in
         d)
